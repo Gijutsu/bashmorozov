@@ -69,7 +69,7 @@ while true; do
             if [[ "${botCommand[1]}" == "convert" ]]; then
                 send "PRIVMSG ${privMSGClient[2]} :Validating convert syntax ..."
 
-                if [[ "${botCommand[2]}" =~ ^0x[[:xdigit:]]+ ]]; then
+                if [[ "${botCommand[2]}" =~ ^0x[[:xdigit:]]+$ ]]; then
                     
                     if [[ ${#botCommand[2]} -gt 17 ]]; then
                         send "PRIVMSG ${privMSGClient[2]} :I do not allow buffer overflows :P"
