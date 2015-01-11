@@ -28,19 +28,15 @@ send()
 # First argument: variable in which to return the text  
 receive()
 {
-    local __returnVariable=$1
     local __message=""
-    local __crFreeMessage=""
-    
+
     IFS='\n' read -ru ${FD} '__message'
 
-    # Remove carriage return so that bash will give us any
-    # problem when matching against the message
-    __crFreeMessage=$(echo -n "'$__message'" | tr -d '\r')
-    
-    eval $__returnVariable="$__crFreeMessage"
+    # Remove carriage return from the value to return so
+    # that bash will not give us any problem when 
+    # matching against the message.
+    echo -n "$__message" | tr -d '\r'
 }
-
 
 # Connect to the IRC-server with the information
 # specified in the configuration above.
@@ -49,7 +45,7 @@ send "USER ${USERNAME} ${HOSTNAME} ${SERVERNAME} :${REALNAME}"
 send "JOIN ${CHANNEL}"
 
 while true; do
-    receive message
+    message=$(receive)
     echo "'$message'" | cat -A
 
     # =~ Is a new feature that enables one to use
