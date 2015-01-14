@@ -134,7 +134,7 @@ blockedInChina()
 
         else
             sendPRIVMSG "$__channel" "Error: the requested URL contains one or more errors, \
-                                    please verify that it is a valid URL."
+                                      please verify that it is a valid URL."
         fi
 
     elif [[ $? -eq 3 ]]; then
@@ -192,6 +192,10 @@ supportedFunctions()
     sendPRIVMSG "$__channel" "flatter nick"
     sendPRIVMSG "$__channel" "help"
 }
+
+# Seed RANDOM with 4 bytes from /dev/urandom
+# See: http://seclists.org/bugtraq/2006/Apr/21
+RANDOM=$(head -c4 /dev/urandom | od -t u4 | awk '{ print $2 }')
 
 # Connect to the IRC-server with the information
 # specified in the configuration above.
